@@ -1,7 +1,9 @@
 import { Stage } from '@/lib/roadmapData';
+import { useProgress } from '@/contexts/ProgressContext';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { ChevronDown, BookOpen, Wrench, Users, Target, AlertCircle } from 'lucide-react';
+import { Checkbox } from '@/components/ui/checkbox';
+import { ChevronDown, BookOpen, Wrench, Users, Target, AlertCircle, CheckCircle2 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 interface StageCardProps {
@@ -11,6 +13,9 @@ interface StageCardProps {
 }
 
 export default function StageCard({ stage, isExpanded, onToggle }: StageCardProps) {
+  const { isCompleted, toggleCompletion, getStageProgress } = useProgress();
+  const progress = getStageProgress(stage.id);
+
   const stageColors = [
     'bg-blue-50 dark:bg-blue-950 border-blue-200 dark:border-blue-800',
     'bg-purple-50 dark:bg-purple-950 border-purple-200 dark:border-purple-800',
@@ -31,6 +36,30 @@ export default function StageCard({ stage, isExpanded, onToggle }: StageCardProp
 
   const colorIndex = (stage.id - 1) % stageColors.length;
 
+  const handleTopicToggle = (topic: string) => {
+    toggleCompletion({
+      stageId: stage.id,
+      itemType: 'topic',
+      itemName: topic,
+    });
+  };
+
+  const handleLabToggle = (lab: string) => {
+    toggleCompletion({
+      stageId: stage.id,
+      itemType: 'lab',
+      itemName: lab,
+    });
+  };
+
+  const handleProjectToggle = (project: string) => {
+    toggleCompletion({
+      stageId: stage.id,
+      itemType: 'project',
+      itemName: project,
+    });
+  };
+
   return (
     <Card
       className={`${stageColors[colorIndex]} border-2 cursor-pointer transition-all hover:shadow-lg`}
@@ -43,9 +72,30 @@ export default function StageCard({ stage, isExpanded, onToggle }: StageCardProp
             <div className="flex items-center gap-3 mb-2">
               <Badge className={stageBadgeColors[colorIndex]}>Stage {stage.id}</Badge>
               <Badge variant="outline">{stage.duration}</Badge>
+              {progress.percentage === 100 && (
+                <Badge className="bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 flex items-center gap-1">
+                  <CheckCircle2 className="w-3 h-3" />
+                  Complete
+                </Badge>
+              )}
             </div>
             <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">{stage.title}</h2>
             <p className="text-slate-700 dark:text-slate-300">{stage.description}</p>
+            
+            {/* Progress bar for stage */}
+            <div className="mt-3 flex items-center gap-3">
+              <div className="flex-1 h-2 bg-slate-300 dark:bg-slate-600 rounded-full overflow-hidden">
+                <motion.div
+                  initial={{ width: 0 }}
+                  animate={{ width: `${progress.percentage}%` }}
+                  transition={{ duration: 0.5 }}
+                  className="h-full bg-gradient-to-r from-blue-500 to-cyan-500"
+                />
+              </div>
+              <span className="text-sm font-semibold text-slate-700 dark:text-slate-300">
+                {progress.completed}/{progress.total}
+              </span>
+            </div>
           </div>
           <motion.div
             animate={{ rotate: isExpanded ? 180 : 0 }}
@@ -65,6 +115,7 @@ export default function StageCard({ stage, isExpanded, onToggle }: StageCardProp
               exit={{ opacity: 0, height: 0 }}
               transition={{ duration: 0.3 }}
               className="mt-6 pt-6 border-t border-current border-opacity-20"
+              onClick={(e) => e.stopPropagation()}
             >
               {/* Topics */}
               <div className="mb-6">
@@ -73,12 +124,31 @@ export default function StageCard({ stage, isExpanded, onToggle }: StageCardProp
                   Topics to Learn
                 </h3>
                 <div className="grid md:grid-cols-2 gap-3">
-                  {stage.topics.map((topic, idx) => (
-                    <div key={idx} className="p-3 bg-white/50 dark:bg-slate-900/50 rounded-lg">
-                      <h4 className="font-semibold text-slate-900 dark:text-white">{topic.name}</h4>
-                      <p className="text-sm text-slate-600 dark:text-slate-400 mt-1">{topic.description}</p>
-                    </div>
-                  ))}
+                  {stage.topics.map((topic, idx) => {
+                    const isTopicCompleted = isCompleted(stage.id, 'topic', topic.name);
+                    return (
+                      <div
+                        key={idx}
+                        className="p-3 bg-white/50 dark:bg-slate-900/50 rounded-lg flex items-start gap-3 cursor-pointer hover:bg-white/70 dark:hover:bg-slate-900/70 transition-colors"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleTopicToggle(topic.name);
+                        }}
+                      >
+                        <Checkbox
+                          checked={isTopicCompleted}
+                          onChange={() => {}}
+                          className="mt-1 flex-shrink-0"
+                        />
+                        <div className="flex-1">
+                          <h4 className={`font-semibold ${isTopicCompleted ? 'line-through text-slate-500 dark:text-slate-400' : 'text-slate-900 dark:text-white'}`}>
+                            {topic.name}
+                          </h4>
+                          <p className="text-sm text-slate-600 dark:text-slate-400 mt-1">{topic.description}</p>
+                        </div>
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
 
@@ -101,14 +171,30 @@ export default function StageCard({ stage, isExpanded, onToggle }: StageCardProp
                   <Target className="w-5 h-5" />
                   Practical Labs & Exercises
                 </h3>
-                <ul className="space-y-2">
-                  {stage.labs.map((lab, idx) => (
-                    <li key={idx} className="text-sm text-slate-700 dark:text-slate-300 flex gap-2">
-                      <span className="text-green-600 dark:text-green-400">✓</span>
-                      {lab}
-                    </li>
-                  ))}
-                </ul>
+                <div className="space-y-2">
+                  {stage.labs.map((lab, idx) => {
+                    const isLabCompleted = isCompleted(stage.id, 'lab', lab);
+                    return (
+                      <div
+                        key={idx}
+                        className="p-3 bg-white/50 dark:bg-slate-900/50 rounded-lg flex items-center gap-3 cursor-pointer hover:bg-white/70 dark:hover:bg-slate-900/70 transition-colors"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleLabToggle(lab);
+                        }}
+                      >
+                        <Checkbox
+                          checked={isLabCompleted}
+                          onChange={() => {}}
+                          className="flex-shrink-0"
+                        />
+                        <span className={`text-sm flex-1 ${isLabCompleted ? 'line-through text-slate-500 dark:text-slate-400' : 'text-slate-700 dark:text-slate-300'}`}>
+                          {lab}
+                        </span>
+                      </div>
+                    );
+                  })}
+                </div>
               </div>
 
               {/* Tools */}
@@ -144,14 +230,30 @@ export default function StageCard({ stage, isExpanded, onToggle }: StageCardProp
               {/* Projects */}
               <div className="mb-6">
                 <h3 className="font-semibold text-slate-900 dark:text-white mb-3">Mini-Projects</h3>
-                <ul className="space-y-2">
-                  {stage.projects.map((project, idx) => (
-                    <li key={idx} className="text-sm text-slate-700 dark:text-slate-300 flex gap-2">
-                      <span className="text-purple-600 dark:text-purple-400">→</span>
-                      {project}
-                    </li>
-                  ))}
-                </ul>
+                <div className="space-y-2">
+                  {stage.projects.map((project, idx) => {
+                    const isProjectCompleted = isCompleted(stage.id, 'project', project);
+                    return (
+                      <div
+                        key={idx}
+                        className="p-3 bg-white/50 dark:bg-slate-900/50 rounded-lg flex items-center gap-3 cursor-pointer hover:bg-white/70 dark:hover:bg-slate-900/70 transition-colors"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleProjectToggle(project);
+                        }}
+                      >
+                        <Checkbox
+                          checked={isProjectCompleted}
+                          onChange={() => {}}
+                          className="flex-shrink-0"
+                        />
+                        <span className={`text-sm flex-1 ${isProjectCompleted ? 'line-through text-slate-500 dark:text-slate-400' : 'text-slate-700 dark:text-slate-300'}`}>
+                          {project}
+                        </span>
+                      </div>
+                    );
+                  })}
+                </div>
               </div>
 
               {/* Common Mistakes */}

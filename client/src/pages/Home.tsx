@@ -10,6 +10,8 @@ import { useSearch } from '@/hooks/useSearch';
 import StageCard from '@/components/StageCard';
 import SearchResults from '@/components/SearchResults';
 import TimelineView from '@/components/TimelineView';
+import ProgressBar from '@/components/ProgressBar';
+import ProgressStats from '@/components/ProgressStats';
 import Hero from '@/components/Hero';
 
 export default function Home() {
@@ -56,6 +58,14 @@ export default function Home() {
 
       {/* Main Content */}
       <main ref={contentRef} className="container py-8">
+        {/* Progress Bar */}
+        <div className="mb-8">
+          <ProgressBar />
+        </div>
+
+        {/* Progress Stats */}
+        <ProgressStats />
+
         {searchQuery ? (
           <SearchResults results={searchResults} onSelectStage={setActiveStage} />
         ) : (
