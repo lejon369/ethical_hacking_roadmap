@@ -12,6 +12,7 @@ import SearchResults from '@/components/SearchResults';
 import TimelineView from '@/components/TimelineView';
 import ProgressBar from '@/components/ProgressBar';
 import ProgressStats from '@/components/ProgressStats';
+import ProgrammingSection from '@/components/ProgrammingSection';
 import Hero from '@/components/Hero';
 
 export default function Home() {
@@ -70,23 +71,27 @@ export default function Home() {
           <SearchResults results={searchResults} onSelectStage={setActiveStage} />
         ) : (
           <Tabs defaultValue="stages" className="w-full">
-            <TabsList className="grid w-full grid-cols-3 mb-8">
-              <TabsTrigger value="stages" className="flex items-center gap-2">
-                <BookOpen className="w-4 h-4" />
+            <TabsList className="grid w-full grid-cols-4 mb-8">
+              <TabsTrigger value="stages">
+                <BookOpen className="w-4 h-4 mr-2" />
                 <span className="hidden sm:inline">Stages</span>
               </TabsTrigger>
-              <TabsTrigger value="timeline" className="flex items-center gap-2">
-                <Zap className="w-4 h-4" />
+              <TabsTrigger value="programming">
+                <Zap className="w-4 h-4 mr-2" />
+                <span className="hidden sm:inline">Programming</span>
+              </TabsTrigger>
+              <TabsTrigger value="timeline">
+                <Target className="w-4 h-4 mr-2" />
                 <span className="hidden sm:inline">Timeline</span>
               </TabsTrigger>
-              <TabsTrigger value="resources" className="flex items-center gap-2">
-                <Award className="w-4 h-4" />
+              <TabsTrigger value="resources">
+                <Award className="w-4 h-4 mr-2" />
                 <span className="hidden sm:inline">Resources</span>
               </TabsTrigger>
             </TabsList>
 
             {/* Stages Tab */}
-            <TabsContent value="stages" className="space-y-6 scroll-mt-20">
+            <TabsContent value="stages" className="space-y-6 scroll-mt-20 py-6">
               <div className="grid gap-6">
                 {stages.map((stage) => (
                   <StageCard
@@ -99,13 +104,18 @@ export default function Home() {
               </div>
             </TabsContent>
 
+            {/* Programming Tab */}
+            <TabsContent value="programming" className="space-y-6 scroll-mt-20 py-6">
+              <ProgrammingSection />
+            </TabsContent>
+
             {/* Timeline Tab */}
-            <TabsContent value="timeline" className="space-y-6 scroll-mt-20">
+            <TabsContent value="timeline" className="space-y-6 scroll-mt-20 py-6">
               <TimelineView timeline={timeline} />
             </TabsContent>
 
             {/* Resources Tab */}
-            <TabsContent value="resources" className="space-y-6 scroll-mt-20">
+            <TabsContent value="resources" className="space-y-6 scroll-mt-20 py-6">
               <div className="grid gap-4">
                 <h2 className="text-2xl font-bold text-slate-900 dark:text-white">Tools & Platforms</h2>
                 

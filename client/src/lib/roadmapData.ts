@@ -549,3 +549,498 @@ export const resources = [
     description: "Crowdsourced security and bug bounty platform"
   }
 ];
+
+
+// Programming Languages and Frameworks for Ethical Hacking
+export interface ProgrammingLanguage {
+  id: string;
+  name: string;
+  difficulty: 'Beginner' | 'Intermediate' | 'Advanced';
+  stage: number;
+  description: string;
+  useCases: string[];
+  resources: {
+    title: string;
+    url: string;
+  }[];
+  projects: string[];
+  tools: string[];
+}
+
+export const programmingLanguages: ProgrammingLanguage[] = [
+  {
+    id: 'python',
+    name: 'Python',
+    difficulty: 'Beginner',
+    stage: 1,
+    description: 'The most essential language for ethical hackers. Python is used for scripting, automation, exploit development, and security tool creation.',
+    useCases: [
+      'Network scanning and reconnaissance',
+      'Exploit development and delivery',
+      'Web scraping and automation',
+      'Malware analysis and reverse engineering',
+      'Data analysis and visualization',
+      'Building custom security tools'
+    ],
+    resources: [
+      {
+        title: 'Python for Everybody',
+        url: 'https://www.py4e.com/'
+      },
+      {
+        title: 'Automate the Boring Stuff with Python',
+        url: 'https://automatetheboringstuff.com/'
+      },
+      {
+        title: 'Black Hat Python',
+        url: 'https://www.oreilly.com/library/view/black-hat-python/9781491900970/'
+      },
+      {
+        title: 'HackTricks Python Security',
+        url: 'https://book.hacktricks.xyz/generic-methodologies-and-resources/python'
+      }
+    ],
+    projects: [
+      'Port scanner with socket programming',
+      'Network packet sniffer using Scapy',
+      'Simple web scraper for vulnerability databases',
+      'Brute force SSH login tool',
+      'Reverse shell generator',
+      'Keylogger implementation',
+      'Exploit framework extension'
+    ],
+    tools: [
+      'Scapy - Network packet manipulation',
+      'Requests - HTTP library for web requests',
+      'Beautiful Soup - Web scraping',
+      'Paramiko - SSH protocol implementation',
+      'Pycryptodome - Cryptographic functions',
+      'PEFile - PE file analysis',
+      'Metasploit - Python modules'
+    ]
+  },
+  {
+    id: 'bash',
+    name: 'Bash/Shell Scripting',
+    difficulty: 'Beginner',
+    stage: 1,
+    description: 'Essential for Linux automation and system administration. Bash scripts are fundamental for penetration testing workflows.',
+    useCases: [
+      'System administration automation',
+      'Batch processing and file operations',
+      'Network reconnaissance scripting',
+      'Log analysis and parsing',
+      'Automated vulnerability scanning',
+      'Post-exploitation automation'
+    ],
+    resources: [
+      {
+        title: 'Advanced Bash-Scripting Guide',
+        url: 'https://www.tldp.org/LDP/abs/html/'
+      },
+      {
+        title: 'Bash Guide for Beginners',
+        url: 'https://www.tldp.org/guides.html'
+      },
+      {
+        title: 'Linux Command Line Basics',
+        url: 'https://www.udemy.com/course/linux-command-line-basics/'
+      }
+    ],
+    projects: [
+      'Network scanning automation script',
+      'Log parser for security analysis',
+      'Automated backup and recovery script',
+      'System hardening automation',
+      'Vulnerability scanner wrapper',
+      'Reconnaissance data aggregator'
+    ],
+    tools: [
+      'Bash - Default shell scripting',
+      'Zsh - Advanced shell with plugins',
+      'Fish - User-friendly shell',
+      'GNU tools - sed, awk, grep'
+    ]
+  },
+  {
+    id: 'javascript',
+    name: 'JavaScript',
+    difficulty: 'Intermediate',
+    stage: 3,
+    description: 'Critical for web security testing, XSS exploitation, and browser-based attacks. Understanding JavaScript is essential for web penetration testing.',
+    useCases: [
+      'XSS (Cross-Site Scripting) exploitation',
+      'DOM manipulation and manipulation',
+      'Browser exploitation',
+      'Web application testing',
+      'Burp Suite extensions development',
+      'Malicious payload creation'
+    ],
+    resources: [
+      {
+        title: 'JavaScript.info',
+        url: 'https://javascript.info/'
+      },
+      {
+        title: 'OWASP JavaScript Security',
+        url: 'https://owasp.org/www-community/attacks/xss/'
+      },
+      {
+        title: 'PortSwigger Web Security Academy',
+        url: 'https://portswigger.net/web-security/cross-site-scripting'
+      }
+    ],
+    projects: [
+      'XSS payload generator',
+      'DOM-based vulnerability scanner',
+      'Burp Suite extension for JavaScript analysis',
+      'Malicious JavaScript payload delivery',
+      'Session hijacking proof-of-concept',
+      'CSRF token extractor'
+    ],
+    tools: [
+      'Node.js - JavaScript runtime',
+      'npm - Package manager',
+      'Burp Suite - Web security testing',
+      'Browser DevTools - Debugging'
+    ]
+  },
+  {
+    id: 'csharp',
+    name: 'C#',
+    difficulty: 'Intermediate',
+    stage: 4,
+    description: 'Essential for Windows exploitation, malware development, and post-exploitation tools. C# is widely used in red team operations.',
+    useCases: [
+      'Windows exploitation and privilege escalation',
+      'Malware development and obfuscation',
+      'Post-exploitation tools',
+      'Active Directory attacks',
+      'Reverse shell development',
+      '.NET framework exploitation'
+    ],
+    resources: [
+      {
+        title: 'Microsoft C# Documentation',
+        url: 'https://docs.microsoft.com/en-us/dotnet/csharp/'
+      },
+      {
+        title: 'Red Team Development with C#',
+        url: 'https://www.oreilly.com/library/view/red-team-development/9781492052289/'
+      },
+      {
+        title: 'HackTricks Windows Exploitation',
+        url: 'https://book.hacktricks.xyz/windows/windows-local-privilege-escalation'
+      }
+    ],
+    projects: [
+      'Windows privilege escalation tool',
+      'Active Directory enumeration tool',
+      'Reverse shell with C2 communication',
+      'Credential harvesting tool',
+      'Process injection proof-of-concept',
+      'Windows service exploitation tool'
+    ],
+    tools: [
+      'Visual Studio - IDE',
+      'SharpHound - AD enumeration',
+      'Rubeus - Kerberos exploitation',
+      'Mimikatz - Credential dumping',
+      '.NET Framework - Core library'
+    ]
+  },
+  {
+    id: 'cpp',
+    name: 'C/C++',
+    difficulty: 'Advanced',
+    stage: 5,
+    description: 'Low-level language for exploit development, reverse engineering, and performance-critical security tools.',
+    useCases: [
+      'Exploit development and shellcode',
+      'Reverse engineering and binary analysis',
+      'Kernel exploitation',
+      'Performance-critical tools',
+      'Malware analysis and development',
+      'Hardware-level security research'
+    ],
+    resources: [
+      {
+        title: 'The C Programming Language',
+        url: 'https://www.amazon.com/Programming-Language-Brian-W-Kernighan/dp/0131103628'
+      },
+      {
+        title: 'Exploit Writing Tutorials',
+        url: 'https://www.corelan.be/index.php/2009/07/19/exploit-writing-tutorial-part-1-stack-based-overflows/'
+      },
+      {
+        title: 'Reverse Engineering with Ghidra',
+        url: 'https://ghidra-sre.org/'
+      }
+    ],
+    projects: [
+      'Buffer overflow exploit',
+      'Shellcode development',
+      'Kernel driver exploitation',
+      'Binary packing and obfuscation',
+      'Custom exploit framework',
+      'Memory corruption vulnerability'
+    ],
+    tools: [
+      'GCC/Clang - Compilers',
+      'GDB - Debugger',
+      'Ghidra - Reverse engineering',
+      'IDA Pro - Disassembler',
+      'Radare2 - Reverse engineering framework'
+    ]
+  },
+  {
+    id: 'go',
+    name: 'Go (Golang)',
+    difficulty: 'Intermediate',
+    stage: 4,
+    description: 'Modern language for building fast, concurrent security tools. Popular for malware development and red team tooling.',
+    useCases: [
+      'Fast security tool development',
+      'Concurrent network scanning',
+      'Malware development',
+      'Post-exploitation tools',
+      'Command and control (C2) development',
+      'Penetration testing framework extensions'
+    ],
+    resources: [
+      {
+        title: 'Go Official Documentation',
+        url: 'https://golang.org/doc/'
+      },
+      {
+        title: 'Go Security Best Practices',
+        url: 'https://golang.org/doc/security'
+      },
+      {
+        title: 'Metasploit Go Modules',
+        url: 'https://github.com/rapid7/metasploit-framework'
+      }
+    ],
+    projects: [
+      'Fast port scanner',
+      'Concurrent vulnerability scanner',
+      'Reverse shell with Go',
+      'Malware dropper in Go',
+      'C2 communication tool',
+      'Network reconnaissance tool'
+    ],
+    tools: [
+      'Go compiler',
+      'Go modules - Dependency management',
+      'Cobra - CLI framework',
+      'Gin - Web framework'
+    ]
+  },
+  {
+    id: 'java',
+    name: 'Java',
+    difficulty: 'Intermediate',
+    stage: 3,
+    description: 'Important for web application security testing and understanding enterprise applications. Used in Burp Suite extension development.',
+    useCases: [
+      'Java web application testing',
+      'Burp Suite extension development',
+      'Deserialization exploitation',
+      'Enterprise application security',
+      'Android security testing',
+      'Spring framework vulnerability exploitation'
+    ],
+    resources: [
+      {
+        title: 'Oracle Java Documentation',
+        url: 'https://docs.oracle.com/javase/'
+      },
+      {
+        title: 'PortSwigger Java Security',
+        url: 'https://portswigger.net/web-security'
+      },
+      {
+        title: 'OWASP Java Security',
+        url: 'https://owasp.org/www-community/attacks/Deserialization_of_untrusted_data'
+      }
+    ],
+    projects: [
+      'Burp Suite extension for Java analysis',
+      'Deserialization exploit development',
+      'Spring framework vulnerability scanner',
+      'Java web application penetration testing tool',
+      'Android malware analysis tool'
+    ],
+    tools: [
+      'JDK - Java Development Kit',
+      'Maven - Build tool',
+      'Burp Suite - Web security testing',
+      'Frida - Dynamic instrumentation'
+    ]
+  },
+  {
+    id: 'rust',
+    name: 'Rust',
+    difficulty: 'Advanced',
+    stage: 5,
+    description: 'Modern systems programming language for building safe, fast security tools and malware with memory safety guarantees.',
+    useCases: [
+      'Safe systems programming for security tools',
+      'High-performance exploit development',
+      'Memory-safe malware development',
+      'Kernel-level security research',
+      'WebAssembly security research',
+      'Cryptographic implementations'
+    ],
+    resources: [
+      {
+        title: 'The Rust Programming Language',
+        url: 'https://doc.rust-lang.org/book/'
+      },
+      {
+        title: 'Rust Security Guidelines',
+        url: 'https://anssi-fr.github.io/rust-guide/'
+      },
+      {
+        title: 'Rust for Security Professionals',
+        url: 'https://www.rust-lang.org/what/wasm/'
+      }
+    ],
+    projects: [
+      'Memory-safe exploit framework',
+      'High-performance port scanner',
+      'Cryptographic vulnerability scanner',
+      'WebAssembly security research tool',
+      'Safe malware analysis sandbox'
+    ],
+    tools: [
+      'Cargo - Package manager',
+      'Rustup - Version manager',
+      'Clippy - Linter',
+      'MIRI - Undefined behavior detector'
+    ]
+  },
+  {
+    id: 'sql',
+    name: 'SQL',
+    difficulty: 'Beginner',
+    stage: 3,
+    description: 'Essential for web security testing. Understanding SQL is critical for identifying and exploiting SQL injection vulnerabilities.',
+    useCases: [
+      'SQL injection exploitation',
+      'Database enumeration and extraction',
+      'Database security testing',
+      'Data exfiltration',
+      'Authentication bypass',
+      'Privilege escalation in databases'
+    ],
+    resources: [
+      {
+        title: 'SQL Tutorial',
+        url: 'https://www.w3schools.com/sql/'
+      },
+      {
+        title: 'PortSwigger SQL Injection',
+        url: 'https://portswigger.net/web-security/sql-injection'
+      },
+      {
+        title: 'OWASP SQL Injection',
+        url: 'https://owasp.org/www-community/attacks/SQL_Injection'
+      }
+    ],
+    projects: [
+      'SQL injection payload generator',
+      'Database enumeration tool',
+      'Automated SQL injection scanner',
+      'Authentication bypass proof-of-concept',
+      'Data extraction automation'
+    ],
+    tools: [
+      'SQLMap - SQL injection automation',
+      'MySQL Workbench - Database management',
+      'PostgreSQL - Database system',
+      'Burp Suite - Web security testing'
+    ]
+  },
+  {
+    id: 'assembly',
+    name: 'Assembly',
+    difficulty: 'Advanced',
+    stage: 5,
+    description: 'Low-level language for reverse engineering, exploit development, and understanding binary code execution.',
+    useCases: [
+      'Reverse engineering and binary analysis',
+      'Shellcode development',
+      'Exploit development and debugging',
+      'Vulnerability analysis',
+      'Malware analysis and understanding',
+      'Performance optimization'
+    ],
+    resources: [
+      {
+        title: 'x86 Assembly Guide',
+        url: 'https://www.cs.uaf.edu/2015/fall/cs301/lecture/09_28_assembly.html'
+      },
+      {
+        title: 'Reverse Engineering with Ghidra',
+        url: 'https://ghidra-sre.org/'
+      },
+      {
+        title: 'Practical Reverse Engineering',
+        url: 'https://www.oreilly.com/library/view/practical-reverse-engineering/9781118787311/'
+      }
+    ],
+    projects: [
+      'Shellcode development and optimization',
+      'Binary vulnerability analysis',
+      'Reverse engineering challenge solutions',
+      'Exploit development with assembly',
+      'Malware behavior analysis'
+    ],
+    tools: [
+      'GDB - GNU Debugger',
+      'Ghidra - Reverse engineering framework',
+      'IDA Pro - Disassembler and debugger',
+      'Radare2 - Reverse engineering framework',
+      'NASM - Assembler'
+    ]
+  }
+];
+
+export const programmingPaths = [
+  {
+    name: 'Web Security Path',
+    languages: ['Python', 'JavaScript', 'SQL'],
+    stage: 3,
+    description: 'Focus on web application security, XSS, SQL injection, and web-based exploitation',
+    duration: '3 months'
+  },
+  {
+    name: 'Exploit Development Path',
+    languages: ['Python', 'C/C++', 'Assembly'],
+    stage: 4,
+    description: 'Master exploit development, shellcode, and advanced binary exploitation',
+    duration: '4 months'
+  },
+  {
+    name: 'Red Team Path',
+    languages: ['Python', 'C#', 'Go'],
+    stage: 4,
+    description: 'Build red team tools, malware, and post-exploitation frameworks',
+    duration: '4 months'
+  },
+  {
+    name: 'Reverse Engineering Path',
+    languages: ['Assembly', 'C/C++', 'Python'],
+    stage: 5,
+    description: 'Analyze binaries, understand malware, and reverse engineer applications',
+    duration: '3 months'
+  },
+  {
+    name: 'Full Stack Hacker Path',
+    languages: ['Python', 'Bash', 'JavaScript', 'C#', 'Go'],
+    stage: 5,
+    description: 'Comprehensive programming skills for all types of security testing',
+    duration: '12 months'
+  }
+];
