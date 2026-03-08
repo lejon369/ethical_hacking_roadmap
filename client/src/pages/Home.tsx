@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Badge } from '@/components/ui/badge';
-import { Search, BookOpen, Zap, Target, Award } from 'lucide-react';
+import { Search, BookOpen, Zap, Target, Award, Brain } from 'lucide-react';
 import { stages, timeline, tools, resources } from '@/lib/roadmapData';
 import { useSearch } from '@/hooks/useSearch';
 import StageCard from '@/components/StageCard';
@@ -13,6 +13,7 @@ import TimelineView from '@/components/TimelineView';
 import ProgressBar from '@/components/ProgressBar';
 import ProgressStats from '@/components/ProgressStats';
 import ProgrammingSection from '@/components/ProgrammingSection';
+import SixHatSolutions from '@/components/SixHatSolutions';
 import Hero from '@/components/Hero';
 
 export default function Home() {
@@ -71,7 +72,7 @@ export default function Home() {
           <SearchResults results={searchResults} onSelectStage={setActiveStage} />
         ) : (
           <Tabs defaultValue="stages" className="w-full">
-            <TabsList className="grid w-full grid-cols-4 mb-8">
+            <TabsList className="grid w-full grid-cols-5 mb-8">
               <TabsTrigger value="stages">
                 <BookOpen className="w-4 h-4 mr-2" />
                 <span className="hidden sm:inline">Stages</span>
@@ -79,6 +80,10 @@ export default function Home() {
               <TabsTrigger value="programming">
                 <Zap className="w-4 h-4 mr-2" />
                 <span className="hidden sm:inline">Programming</span>
+              </TabsTrigger>
+              <TabsTrigger value="hats">
+                <Brain className="w-4 h-4 mr-2" />
+                <span className="hidden sm:inline">6 Hats</span>
               </TabsTrigger>
               <TabsTrigger value="timeline">
                 <Target className="w-4 h-4 mr-2" />
@@ -107,6 +112,11 @@ export default function Home() {
             {/* Programming Tab */}
             <TabsContent value="programming" className="space-y-6 scroll-mt-20 py-6">
               <ProgrammingSection />
+            </TabsContent>
+
+            {/* Six Hats Tab */}
+            <TabsContent value="hats" className="space-y-6 scroll-mt-20 py-6">
+              <SixHatSolutions />
             </TabsContent>
 
             {/* Timeline Tab */}
