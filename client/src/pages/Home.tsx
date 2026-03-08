@@ -14,6 +14,7 @@ import ProgressBar from '@/components/ProgressBar';
 import ProgressStats from '@/components/ProgressStats';
 import ProgrammingSection from '@/components/ProgrammingSection';
 import SixHatSolutions from '@/components/SixHatSolutions';
+import ComprehensiveRoadmap from '@/components/ComprehensiveRoadmap';
 import Hero from '@/components/Hero';
 
 export default function Home() {
@@ -72,7 +73,7 @@ export default function Home() {
           <SearchResults results={searchResults} onSelectStage={setActiveStage} />
         ) : (
           <Tabs defaultValue="stages" className="w-full">
-            <TabsList className="grid w-full grid-cols-5 mb-8">
+            <TabsList className="grid w-full grid-cols-6 mb-8">
               <TabsTrigger value="stages">
                 <BookOpen className="w-4 h-4 mr-2" />
                 <span className="hidden sm:inline">Stages</span>
@@ -85,12 +86,16 @@ export default function Home() {
                 <Brain className="w-4 h-4 mr-2" />
                 <span className="hidden sm:inline">6 Hats</span>
               </TabsTrigger>
-              <TabsTrigger value="timeline">
+              <TabsTrigger value="roadmap">
                 <Target className="w-4 h-4 mr-2" />
+                <span className="hidden sm:inline">3-Year</span>
+              </TabsTrigger>
+              <TabsTrigger value="timeline">
+                <Award className="w-4 h-4 mr-2" />
                 <span className="hidden sm:inline">Timeline</span>
               </TabsTrigger>
               <TabsTrigger value="resources">
-                <Award className="w-4 h-4 mr-2" />
+                <BookOpen className="w-4 h-4 mr-2" />
                 <span className="hidden sm:inline">Resources</span>
               </TabsTrigger>
             </TabsList>
@@ -117,6 +122,11 @@ export default function Home() {
             {/* Six Hats Tab */}
             <TabsContent value="hats" className="space-y-6 scroll-mt-20 py-6">
               <SixHatSolutions />
+            </TabsContent>
+
+            {/* 3-Year Roadmap Tab */}
+            <TabsContent value="roadmap" className="space-y-6 scroll-mt-20 py-6">
+              <ComprehensiveRoadmap />
             </TabsContent>
 
             {/* Timeline Tab */}
