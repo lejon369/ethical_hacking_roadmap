@@ -14,7 +14,7 @@ import ProgressBar from '@/components/ProgressBar';
 import ProgressStats from '@/components/ProgressStats';
 import ProgrammingSection from '@/components/ProgrammingSection';
 import SixHatSolutions from '@/components/SixHatSolutions';
-import ComprehensiveRoadmap from '@/components/ComprehensiveRoadmap';
+import ComprehensiveRoadmapDynamic from '@/components/ComprehensiveRoadmapDynamic';
 import Hero from '@/components/Hero';
 
 export default function Home() {
@@ -126,7 +126,7 @@ export default function Home() {
 
             {/* 3-Year Roadmap Tab */}
             <TabsContent value="roadmap" className="space-y-6 scroll-mt-20 py-6">
-              <ComprehensiveRoadmap />
+              <ComprehensiveRoadmapDynamic />
             </TabsContent>
 
             {/* Timeline Tab */}

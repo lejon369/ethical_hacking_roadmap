@@ -6,12 +6,26 @@ export interface CompletedItem {
   itemName: string;
 }
 
+export interface RoadmapTask {
+  id: string;
+  year: number;
+  semester: number;
+  category: 'topic' | 'project' | 'language' | 'milestone';
+  name: string;
+  description?: string;
+}
+
 interface ProgressContextType {
   completedItems: CompletedItem[];
+  completedRoadmapTasks: string[];
   toggleCompletion: (item: CompletedItem) => void;
+  toggleRoadmapTask: (taskId: string) => void;
   isCompleted: (stageId: number, itemType: string, itemName: string) => boolean;
+  isRoadmapTaskCompleted: (taskId: string) => boolean;
   getStageProgress: (stageId: number) => { completed: number; total: number; percentage: number };
   getTotalProgress: () => { completed: number; total: number; percentage: number };
+  getRoadmapProgress: (year?: number) => { completed: number; total: number; percentage: number };
+  getYearProgress: (year: number) => { completed: number; total: number; percentage: number };
   clearProgress: () => void;
 }
 
@@ -19,15 +33,24 @@ const ProgressContext = createContext<ProgressContextType | undefined>(undefined
 
 export function ProgressProvider({ children }: { children: React.ReactNode }) {
   const [completedItems, setCompletedItems] = useState<CompletedItem[]>([]);
+  const [completedRoadmapTasks, setCompletedRoadmapTasks] = useState<string[]>([]);
 
   // Load from localStorage on mount
   useEffect(() => {
     const saved = localStorage.getItem('ethicalHackingProgress');
+    const savedRoadmap = localStorage.getItem('roadmapProgress');
     if (saved) {
       try {
         setCompletedItems(JSON.parse(saved));
       } catch (error) {
         console.error('Failed to load progress:', error);
+      }
+    }
+    if (savedRoadmap) {
+      try {
+        setCompletedRoadmapTasks(JSON.parse(savedRoadmap));
+      } catch (error) {
+        console.error('Failed to load roadmap progress:', error);
       }
     }
   }, []);
@@ -36,6 +59,11 @@ export function ProgressProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     localStorage.setItem('ethicalHackingProgress', JSON.stringify(completedItems));
   }, [completedItems]);
+
+  // Save roadmap progress to localStorage
+  useEffect(() => {
+    localStorage.setItem('roadmapProgress', JSON.stringify(completedRoadmapTasks));
+  }, [completedRoadmapTasks]);
 
   const toggleCompletion = (item: CompletedItem) => {
     setCompletedItems((prev) => {
@@ -86,6 +114,49 @@ export function ProgressProvider({ children }: { children: React.ReactNode }) {
     };
   };
 
+  const toggleRoadmapTask = (taskId: string) => {
+    setCompletedRoadmapTasks((prev) => {
+      if (prev.includes(taskId)) {
+        return prev.filter((id) => id !== taskId);
+      } else {
+        return [...prev, taskId];
+      }
+    });
+  };
+
+  const isRoadmapTaskCompleted = (taskId: string): boolean => {
+    return completedRoadmapTasks.includes(taskId);
+  };
+
+  const getRoadmapProgress = (year?: number) => {
+    let totalTasks = 75;
+    let completedTasks = completedRoadmapTasks.length;
+
+    if (year) {
+      const yearTaskCounts: Record<number, number> = { 1: 20, 2: 25, 3: 30 };
+      totalTasks = yearTaskCounts[year] || 20;
+      completedTasks = completedRoadmapTasks.filter((id) => id.startsWith(`year${year}`)).length;
+    }
+
+    return {
+      completed: completedTasks,
+      total: totalTasks,
+      percentage: Math.round((completedTasks / totalTasks) * 100),
+    };
+  };
+
+  const getYearProgress = (year: number) => {
+    const yearTaskCounts: Record<number, number> = { 1: 20, 2: 25, 3: 30 };
+    const totalTasks = yearTaskCounts[year] || 20;
+    const completedTasks = completedRoadmapTasks.filter((id) => id.startsWith(`year${year}`)).length;
+
+    return {
+      completed: completedTasks,
+      total: totalTasks,
+      percentage: Math.round((completedTasks / totalTasks) * 100),
+    };
+  };
+
   const clearProgress = () => {
     setCompletedItems([]);
     localStorage.removeItem('ethicalHackingProgress');
@@ -95,10 +166,15 @@ export function ProgressProvider({ children }: { children: React.ReactNode }) {
     <ProgressContext.Provider
       value={{
         completedItems,
+        completedRoadmapTasks,
         toggleCompletion,
+        toggleRoadmapTask,
         isCompleted,
+        isRoadmapTaskCompleted,
         getStageProgress,
         getTotalProgress,
+        getRoadmapProgress,
+        getYearProgress,
         clearProgress,
       }}
     >
